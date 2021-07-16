@@ -6,6 +6,8 @@ function generateColors() {
 }
 
 let rgbControl = 'rgb(168, 34, 1)';
+let score = 0;
+let verife = true;
 
 function colorsBall() {
   const balls = document.getElementsByClassName('ball');
@@ -23,12 +25,20 @@ window.onload = colorsBall();
 
 document.querySelectorAll('.ball').forEach((element) => {
   element.addEventListener('click', () => {
-    const selectedBall = element.style.backgroundColor;
-    const answerBall = `rgb${document.getElementById('rgb-color').innerText}`;
-    if (selectedBall === answerBall) {
-      document.getElementById('answer').innerHTML = 'Acertou!';
-    } else {
-      document.getElementById('answer').innerHTML = 'Errou! Tente novamente!';
+    if (verife ) {
+      const selectedBall = element.style.backgroundColor;
+      const answerBall = `rgb${document.getElementById('rgb-color').innerText}`;
+      if (selectedBall === answerBall) {
+        document.getElementById('answer').innerHTML = 'Acertou!';
+        score += 3;
+        document.getElementById('score').innerHTML = score;
+        verife = false;
+      } else {
+        document.getElementById('answer').innerHTML = 'Errou! Tente novamente!';
+        score -= 1;
+        document.getElementById('score').innerHTML = score;
+        verife = false;
+      }
     }
   })
 });
@@ -38,5 +48,5 @@ document.getElementById('reset-game').addEventListener('click', () => {
   document.getElementById('rgb-color').innerHTML = rgbControl.split('rgb')[1];
   colorsBall();
   document.getElementById('answer').innerHTML = "Escolha uma cor";
-
+  verife = true;
 })
