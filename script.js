@@ -5,13 +5,14 @@ function generateColors() {
   return `rgb(${red}, ${green}, ${blue})`;
 }
 
+let rgbControl = 'rgb(168, 34, 1)';
+
 function colorsBall() {
   const balls = document.getElementsByClassName('ball');
+  const sort = Math.floor(Math.random() * 6);
   for (let index = 0; index < balls.length; index += 1) {
-    const sort = Math.floor(Math.random() * 6);
     if (sort === index) {
-      balls[index].style.backgroundColor = 'rgb(168, 34, 1)';
-      // balls[index].id = 'answer';
+      balls[index].style.backgroundColor = rgbControl;
     } else {
       balls[index].style.backgroundColor = generateColors();
     }
@@ -27,7 +28,15 @@ document.querySelectorAll('.ball').forEach((element) => {
     if (selectedBall === answerBall) {
       document.getElementById('answer').innerHTML = 'Acertou!';
     } else {
-      document.getElementById('answer').innerHTML= 'Errou! Tente novamente!';
+      document.getElementById('answer').innerHTML = 'Errou! Tente novamente!';
     }
   })
 });
+
+document.getElementById('reset-game').addEventListener('click', () => {
+  rgbControl = generateColors();
+  document.getElementById('rgb-color').innerHTML = rgbControl.split('rgb')[1];
+  colorsBall();
+  document.getElementById('answer').innerHTML = "Escolha uma cor";
+
+})
